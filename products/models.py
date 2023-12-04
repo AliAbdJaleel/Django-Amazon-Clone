@@ -1,6 +1,8 @@
+from collections.abc import Iterable
 from django.db import models
 from taggit.managers import TaggableManager # pip install django-taggit
 from django.utils import timezone
+from django.utils.text import slugify
 # Create your models here.
 
 FLAG_TYPE = (
@@ -19,7 +21,17 @@ class Product(models.Model):
     subtitle = models.TextField(max_length=500)
     description = models.TextField(max_length=50000)
     tags = TaggableManager()
-    brand = models.ForeignKey('Brand',related_name='product_brand',on_delete=models.SET_NULL = True)
+
+    slug = models.SlugField(blank=True,null=True)
+    def save(self, *args , **kwargs):
+        self.slug = slugify(self.name)
+        super(Product,self).save(*args , **kwargs)
+
+        
+
+
+
+    brand = models.ForeignKey('Brand',related_name='product_brand',on_delete=models.SET_NULL,null= True)
 
 
 
