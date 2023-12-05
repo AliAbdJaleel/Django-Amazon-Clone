@@ -2,6 +2,7 @@ from collections.abc import Iterable
 from django.db import models
 from taggit.managers import TaggableManager # pip install django-taggit
 from django.utils import timezone
+from django.contrib.auth.models import User
 from django.utils.text import slugify  # لتحويل اسم المنتج او المادة الى الرابط
 from django.utils.translation import gettext_lazy as _     # يتم استدعاء هذه المكتبة في حال الموقع فيه اكثر من لغة
 # Create your models here.
@@ -45,14 +46,16 @@ class ProductImages(models.Model):
     product = models.ForeignKey(Product,verbose_name= _('product'),related_name='product_image',on_delete=models.CASCADE)
     image = models.ImageField(_('image'),upload_to='productimages') # productimages is the Name of folder contains images
     slug = models.SlugField(blank=True,null=True)
-    def save(self, *args , **kwargs):
-        self.slug = slugify(self.name)
-        super(Product,self).save(*args , **kwargs)
+ 
 
 
 class Brand(models.Model):
     name = models.CharField(_('name'),max_length=100)
     image = models.ImageField(_('image'),upload_to='brand')
+
+    def save(self, *args , **kwargs):
+        self.slug = slugify(self.name)
+        super(Brand,self).save(*args , **kwargs)
     def __str__(self):
         return self.name
 
