@@ -24,9 +24,7 @@ class Product(models.Model):
     description = models.TextField(_('description'),max_length=50000)
     
     brand = models.ForeignKey('Brand',verbose_name=_('brand'),related_name='product_brand',on_delete=models.SET_NULL,null= True)
-   
     tags = TaggableManager(_('tags'))
-
     slug = models.SlugField(blank=True,null=True,unique=True)
     def save(self, *args , **kwargs):
         self.slug = slugify(self.name)
@@ -52,7 +50,7 @@ class ProductImages(models.Model):
 class Brand(models.Model):
     name = models.CharField(_('name'),max_length=100)
     image = models.ImageField(_('image'),upload_to='brand')
-
+    slug = models.SlugField(blank=True,null=True)
     def save(self, *args , **kwargs):
         self.slug = slugify(self.name)
         super(Brand,self).save(*args , **kwargs)
