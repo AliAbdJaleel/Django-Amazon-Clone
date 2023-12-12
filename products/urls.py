@@ -5,5 +5,4 @@ urlpatterns = [
     path('',ProductList.as_view()),
     path('<slug:slug>',ProductDetail.as_view())
 
-
 ]

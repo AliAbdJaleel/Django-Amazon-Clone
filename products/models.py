@@ -65,4 +65,4 @@ class Review(models.Model):
     rate = models.IntegerField(_('rate'),choices= [(i,i) for i in range(1,6)])
     created_at = models.DateTimeField(_('created_at'),default=timezone.now)
     def __str__(self):
-        return f"{self.name} - {self.product} - {self.rate}"                        
+        return f"{self.user} - {self.product} - {self.rate}"                        
