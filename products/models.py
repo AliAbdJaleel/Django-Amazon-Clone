@@ -41,11 +41,10 @@ class Product(models.Model):
 
 
 class ProductImages(models.Model):
-    product = models.ForeignKey(Product,verbose_name= _('product'),related_name='product_image',on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,verbose_name='product',related_name='product_image',on_delete=models.CASCADE)
     image = models.ImageField(_('image'),upload_to='productimages') # productimages is the Name of folder contains images
-    slug = models.SlugField(blank=True,null=True)
+    #slug = models.SlugField(blank=True,null=True)
  
-
 
 class Brand(models.Model):
     name = models.CharField(_('name'),max_length=100)

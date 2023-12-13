@@ -42,18 +42,26 @@
                                 <label class="details-label off">-10%</label>
                             </div>
                             <ul class="details-preview"> 
-                                <li><img src="images/product/01.jpg" alt="product"></li>
-                                <li><img src="images/product/01.jpg" alt="product"></li>
-                                <li><img src="images/product/01.jpg" alt="product"></li>
-                                <li><img src="images/product/01.jpg" alt="product"></li>
-                                <li><img src="images/product/01.jpg" alt="product"></li>
+                                {% for image in images %}
+
+
+                                <li><img src="{{image.image.url}}" alt="product"></li>
+                              
+
+                                {% endfor %}
                             </ul>
                             <ul class="details-thumb">
-                                <li><img src="images/product/01.jpg" alt="product"></li>
-                                <li><img src="images/product/01.jpg" alt="product"></li>
-                                <li><img src="images/product/01.jpg" alt="product"></li>
-                                <li><img src="images/product/01.jpg" alt="product"></li>
-                                <li><img src="images/product/01.jpg" alt="product"></li>
+
+
+                                {% for image in images %}
+
+                                <li><img src="{{image.image.url}}" alt="product"></li>
+                              
+
+                                {% endfor %}
+                             
+                               
+                                
                             </ul>
                         </div>
                     </div>
@@ -143,7 +151,7 @@
                         <div class="product-details-frame">
                             <h3 class="frame-title">Reviews (2)</h3>
                             <ul class="review-list">
-                                {% for review in object.review_product.all  %}
+                                 {% for review in reviews  %} <!-- object.review_product.all -->
                                 <li class="review-item">
                                     <div class="review-media">
                                         <a class="review-avatar" href="#">
@@ -153,7 +161,6 @@
                                             <a href="#">{{review.user}}</a>
                                             <span>June 02, 2020</span>
                                             <span>{{review.created_at}}</span>
-
                                         </h5>
                                     </div>
                                     <ul class="review-rating">
