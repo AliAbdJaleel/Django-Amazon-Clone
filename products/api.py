@@ -8,9 +8,10 @@ from rest_framework import filters
 class ProductListAPI(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = serializers.ProductListSerializer
-    filter_backends = [DjangoFilterBackend,filters.SearchFilter]
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
     filterset_fields = ['brand','flag']
     search_fields = ['name', 'subtitle','description']
+    ordering_fields = ['price']
 
 
 
