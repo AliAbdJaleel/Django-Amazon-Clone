@@ -137,7 +137,7 @@ class BrandDetail(ListView):
         return context
    
 
-
+ 
 
 """ class BrandDetail(DetailView):
     model = Brand
