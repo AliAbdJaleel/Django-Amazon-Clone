@@ -33,7 +33,6 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     
-
     def review_count(self):
         review = self.review_product.all().count()
         return review
@@ -47,6 +46,8 @@ class Product(models.Model):
         else:
             avg = 0
         return avg
+    
+    
     class Meta:
         ordering = ['id']
         verbose_name = 'Product'
