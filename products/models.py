@@ -60,6 +60,8 @@ class Product(models.Model):
 
 
 
+
+
 class ProductImages(models.Model):
     product = models.ForeignKey(Product,verbose_name='product',related_name='product_image',on_delete=models.CASCADE)
     image = models.ImageField(_('image'),upload_to='productimages') # productimages is the Name of folder contains images
