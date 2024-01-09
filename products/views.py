@@ -15,10 +15,10 @@ def mydebug(request):
     
     # column number----------------
     #data = Product.objects.filter(price = 80)
-    #data = Product.objects.filter(price__gt = 98)
-    #data = Product.objects.filter(price__gte = 98)
-    # data = Product.objects.filter(price__lt = 25)
-    #data = Product.objects.filter(price__range=(80,83))
+    #data = Product.objects.filter(price__gt = 98) #greater than
+    #data = Product.objects.filter(price__gte = 98) # greater or equal
+    # data = Product.objects.filter(price__lt = 25) # less than
+    #data = Product.objects.filter(price__range=(80,83)) between
 
     #relation----------------
     # numbers

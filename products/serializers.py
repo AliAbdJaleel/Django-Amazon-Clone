@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from taggit.serializers import TagListSerializerField, TaggitSerializer
 from .models import Product , Brand , ProductImages , Review
 
 
@@ -20,14 +21,19 @@ class ProductReviewSerializer(serializers.ModelSerializer):
 
 
 
-class ProductListSerializer(serializers.ModelSerializer):
+class ProductListSerializer(TaggitSerializer,serializers.ModelSerializer):
     brand = serializers.StringRelatedField()  # هذا السطر لغرض استرجاع الاسم المذكور في دالة الاس تي ار الموجودة في المودل بدلا من الاي دي
-    review_count = serializers.SerializerMethodField() # ياخذ هذا العمود من نتيجة الدالة حسب الاسم المتشابه بينه وبين الدالة
-    avg_rate = serializers.SerializerMethodField()
+    tags = TagListSerializerField()
+   
+    # review_count = serializers.SerializerMethodField() # ياخذ هذا العمود من نتيجة الدالة حسب الاسم المتشابه بينه وبين الدالة
+    # avg_rate = serializers.SerializerMethodField()
     class Meta:
         model = Product
-        fields = '__all__'
-    def get_review_count(self,object):
+        #fields = '__all__'
+        fields = ['name','brand','price','flag','subtitle','sku','description','image','review_count','avg_rate','tags']
+
+        # تم الغاء هذه الدوال وتعويضهم عن طريق اضافة الدوال في المودل
+"""     def get_review_count(self,object):
         reviews = object.review_product.all().count()
         return reviews
     def get_avg_rate(self,object):
@@ -40,19 +46,20 @@ class ProductListSerializer(serializers.ModelSerializer):
         else:
             avg = 0
         return avg
+ """
 
 
 
-
-class ProductDetailSerializer(serializers.ModelSerializer):
+class ProductDetailSerializer(TaggitSerializer,serializers.ModelSerializer):
     brand = serializers.StringRelatedField()
+    tags = TagListSerializerField()
     #review_count = serializers.SerializerMethodField()
     #avg_rate = serializers.SerializerMethodField()
     images = ProductImagesSerializer(source= 'product_image',many=True )
     review = ProductReviewSerializer(source = 'review_product',many = True)
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = ['name','brand','price','flag','subtitle','sku','description','image','review_count','avg_rate','images','review','tags']
 
 
 
