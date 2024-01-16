@@ -149,7 +149,7 @@ class BrandDetail(ListView):
         return context """
 
 def add_review(request,slug):
-    product = Product.objects.get(slug = slug)
+    product = Product.objects.get(slug=slug)
     review = request.POST['review'] # request.POST.get('review')  request.GET.get('review')
     rate = request.POST['rating']
 
