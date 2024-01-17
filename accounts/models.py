@@ -10,7 +10,7 @@ ADDRESS_TYPE = (
 )
 
 # Create your models here.
-class Adress(models.Model):
+class Address(models.Model):
   
   user = models.ForeignKey(User,related_name='user_address',on_delete=models.CASCADE)
   address = models.TextField(max_length=200)
