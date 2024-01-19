@@ -3,6 +3,11 @@ from django.shortcuts import render
 from .models import Order
 
 def order_list(request):
-    data = Order.objects.filter(user__id=1)
-    
+    data = Order.objects.filter(user=request.user)
+    return render(request,'orders/order_list.html',{'orders':data})
 
+
+
+def checkout(request):
+
+    return render(request,'orders/checkout.html',{})
