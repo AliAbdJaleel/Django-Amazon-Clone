@@ -54,7 +54,7 @@ class ApplyCouponAPI(generics.GenericAPIView):
                 cart.save()
                 coupon.quantity -=1
                 coupon.save()
-                return Response({'message':'coupon was applied successfully'},status=status)
+                return Response({'message':'coupon was applied successfully'}) # ,status=status.HTTP_200_OK لم تعمل
             else:
                 return Response({'message':'coupon is Invalid or expired'})
         return Response({'message':'coupon not found'})
@@ -103,7 +103,7 @@ class CreateOrderAPI(generics.GenericAPIView):
         # send email
 
 
-        return Response({'message':'order was created succcessfuly'},status=status.HTTP_201_CREATED)
+        return Response({'message':'order was created succcessfuly'}) # ,status=status.HTTP_201_CREATED
 
 
 class CartCreateUpdateDelete(generics.GenericAPIView):
