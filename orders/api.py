@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from .serializers import CartDetailSerializer,CartSerializer,OrderDetailSerializer,OrderSerializer
-
+from rest_framework import status
 from .models import Order , OrderDetail , Cart , CartDetail , Coupon
 from products.models import Product
 from settings.models import DeliveryFee
@@ -54,7 +54,7 @@ class ApplyCouponAPI(generics.GenericAPIView):
                 cart.save()
                 coupon.quantity -=1
                 coupon.save()
-                return Response({'message':'coupon was applied successfully'}) # ,status=status.HTTP_200_OK لم تعمل
+                return Response({'message':'coupon was applied successfully'},status=status.HTTP_200_OK) 
             else:
                 return Response({'message':'coupon is Invalid or expired'})
         return Response({'message':'coupon not found'})
@@ -103,9 +103,40 @@ class CreateOrderAPI(generics.GenericAPIView):
         # send email
 
 
-        return Response({'message':'order was created succcessfuly'}) # ,status=status.HTTP_201_CREATED
+        return Response({'message':'order was created succcessfuly'},status=status.HTTP_201_CREATED) # ,status=status.HTTP_201_CREATED
 
 
 class CartCreateUpdateDelete(generics.GenericAPIView):
-    pass
+    
+    #get or create
+    def get(self,request,*args,**kwargs):
+        user = User.objects.get(username=self.kwargs['username'])
+        cart,created = Cart.objects.get_or_create(user=user,status='Inprogress')
+        data = CartSerializer(cart).data
+        return Response({'cart':data})
+    
+
+   # add & update cart 
+    def post(self,request,*args,**kwargs):
+        user = User.objects.get(username=self.kwargs['username'])
+        product = Product.objects.get(id=request.data['product_id'])
+        quantity = int(request.data['quantity'])
+        cart = Cart.objects.get(user=user,status = 'Inprogress')
+        cart_detail , created = CartDetail.objects.get_or_create(cart=cart,product=product)
+        cart_detail.quantity = quantity
+        cart_detail.total = round(product.price * cart_detail.quantity,2)
+        cart_detail.save()
+        return Response({'message':'cart was updated successfully'},status=status.HTTP_201_CREATED)
+    
+
+
+
+    # delete from cart
+    def delete(self,request,*args,**kwargs):
+        user = User.objects.get(username=self.kwargs['username'])
+        #cart = Cart.objects.get(user=user,status='Inprogress')
+        product = CartDetail.objects.get(id=request.data['item_id'])
+        product.delete()
+        return Response({'message':'item was deleted successfully'},status=status.HTTP_202_ACCEPTED)
+
     
