@@ -173,4 +173,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
     }
 } """
 
+AUTHENTICATION_BACKENDS = [
+    'accounts.backend.EmailOrUserNameLogin'
+]
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
