@@ -129,8 +129,6 @@ class CartCreateUpdateDelete(generics.GenericAPIView):
         return Response({'message':'cart was updated successfully'},status=status.HTTP_201_CREATED)
     
 
-
-
     # delete from cart
     def delete(self,request,*args,**kwargs):
         user = User.objects.get(username=self.kwargs['username'])
@@ -138,5 +136,7 @@ class CartCreateUpdateDelete(generics.GenericAPIView):
         product = CartDetail.objects.get(id=request.data['item_id'])
         product.delete()
         return Response({'message':'item was deleted successfully'},status=status.HTTP_202_ACCEPTED)
+    
+    
 
     
